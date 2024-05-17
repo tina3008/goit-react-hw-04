@@ -11,10 +11,10 @@ export default function App() {
   useEffect(() => {
     async function fetchImage() {
       const response = await axios.get(
-        "https://api.unsplash.com/photos/?client_id=s0XrVkvZCxZybVrgAUlDfLQ7GhmjR-Qp5eV1OTeQ98w"
+        "https://api.unsplash.com/search/photos?client_id=s0XrVkvZCxZybVrgAUlDfLQ7GhmjR-Qp5eV1OTeQ98w&query=dog"
       );
       console.log(response);
-      setImages(response.data.hits);
+      setImages(response.data);
     }
 
     fetchImage();
