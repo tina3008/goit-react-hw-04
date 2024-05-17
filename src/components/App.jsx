@@ -14,7 +14,7 @@ export default function App() {
         "https://api.unsplash.com/search/photos?client_id=s0XrVkvZCxZybVrgAUlDfLQ7GhmjR-Qp5eV1OTeQ98w&query=dog"
       );
       console.log(response);
-      setImages(response.data);
+      setImages(response.data.total);
     }
 
     fetchImage();
