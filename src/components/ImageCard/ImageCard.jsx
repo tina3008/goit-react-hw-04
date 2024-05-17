@@ -1,7 +1,7 @@
 import css from "./ImageCard.module.css";
 
 export default function ImageCard({ imgLink, imgSlug }) {
-console.log("card");
+
   return (
     <div>
   
