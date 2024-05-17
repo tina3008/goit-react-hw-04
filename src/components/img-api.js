@@ -10,7 +10,7 @@ export const getImages = async () => {
       },
     });
 
-    return response.data;
+    return response.data.results;
   } catch (error) {
     console.error("Error fetching articles:", error);
     throw error;

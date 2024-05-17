@@ -2,14 +2,16 @@ import ImageCard from "../ImageCard/ImageCard";
 import css from './ImageGallery.module.css'
 
 export default function ImageGallery({ items }) {
- console.log({items});
+ console.log("gallery",{items});
 
   return (
     <ul className={css.imgList}>
      
-      {items.map(({ item }) => (
-        <li key={item.id}>
-          <ImageCard card={item} />
+      {items.map(({id, urls, slug }) => (
+        <li key={id}>
+          <ImageCard imgLink={urls.small}
+          imgSlug={slug} />
+
         </li>
       ))}
     </ul>

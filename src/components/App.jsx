@@ -23,8 +23,9 @@ export default function App() {
  
   return (
     <div>
-      <h1>gallery</h1>    
+    
       {images.length > 0 && <ImageGallery items={images} />}
+    
     </div>
   );
 }
