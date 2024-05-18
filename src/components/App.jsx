@@ -5,12 +5,13 @@ import { getImages } from "./img-api";
 import SearchBar from "./SearchBar/SearchBar";
 import Loader from "./Loader/Loader"
 import ErrorMessage from './ErrorMessage/ErrorMessage'
-// import css from "./App.module.css";
+import ImageModal from './ImageModal/ImageModal'
 
 export default function App() {
   const [images, setImages] = useState([]);
   const [error, setError] = useState([]);
   const [loading, setLoading] = useState([]);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   // useEffect(() => {
   //   async function fetchImage() {
