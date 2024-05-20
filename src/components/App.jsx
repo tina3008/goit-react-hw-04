@@ -15,22 +15,29 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-
   const [totalPage, setTotalPage] = useState(false);
+
+
 
   useEffect(() => {
     if (searchQuery.trim() === "") {
       return;
     }
+      async function getPhoto() {
+        try {
+          setLoading(true);
+          setError(false);
+          const data = await getImages(searchQuery, page);
+          setTotalPage(page < Math.ceil(data.total / 15));
+          setImages(data.results);
+        } catch (error) {
+          setError(true);
+        }
+      }
+    getPhoto();
     async function fetchImages() {
       try {
-        setLoading(true);
-        setError(false);
-        const data = await getImages(searchQuery, page);
-        setTotalPage(page < Math.ceil(data.total / 15));
-        setImages(data.results);
         setImages((prevState) => [...prevState, ...images]);
-      
       } catch (error) {
         setError(true);
       } finally {
@@ -49,7 +56,7 @@ export default function App() {
 
   const hendleLoadMore = async () => {
     setPage(page + 1);
-    console.log(page);
+   
   };
 
   return (
