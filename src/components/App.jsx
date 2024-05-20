@@ -3,68 +3,64 @@ import { useEffect, useState } from "react";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import { getImages } from "./img-api";
 import SearchBar from "./SearchBar/SearchBar";
-import Loader from "./Loader/Loader"
-import ErrorMessage from './ErrorMessage/ErrorMessage'
-import ImageModal from './ImageModal/ImageModal'
+import Loader from "./Loader/Loader";
+import ErrorMessage from "./ErrorMessage/ErrorMessage";
+import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
+
+import ImageModal from "./ImageModal/ImageModal";
 
 export default function App() {
   const [images, setImages] = useState([]);
-  const [error, setError] = useState([]);
-  const [loading, setLoading] = useState([]);
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // useEffect(() => {
-  //   async function fetchImage() {
-  //     setLoading(false);
-  //     try {
-  //       setLoading(true);
-  //       const getjsImages = await getImages();
-  //       setImages(getjsImages);
-  //     } catch (error) {
-  //       setError(true);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  //   fetchImage();
-  // }, []);
+  const [totalPage, setTotalPage] = useState(false);
 
- useEffect(() => {
-    async function fetchImage() {
-      setLoading(false);     
-        setError(false);         
-    
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      return;
     }
-    fetchImage();
-  }, []);
+    async function fetchImages() {
+      try {
+        setLoading(true);
+        setError(false);
+        const data = await getImages(searchQuery, page);
+        setTotalPage(page < Math.ceil(data.total / 15));
+        setImages(data.results);
+        setImages((prevState) => [...prevState, ...images]);
+      
+      } catch (error) {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    }
 
+    fetchImages();
+  }, [page, searchQuery]);
 
   const handleSearch = async (searchImg) => {
-   
-    try {
-      setImages([]);
-      setError(false);
-      setLoading(true);
-      const data = await getImages(searchImg);
-      setImages(data);
-      
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
+    setSearchQuery(searchImg);
+    setPage(1);
+    setImages([]);
+  };
+
+  const hendleLoadMore = async () => {
+    setPage(page + 1);
+    console.log(page);
   };
 
   return (
     <div>
-    
       <SearchBar onSearch={handleSearch} />
-      
-      {error && (
-        <ErrorMessage/>
-      )}
+
+      {error && <ErrorMessage />}
       {images.length > 0 && <ImageGallery items={images} />}
-      {loading && <Loader/>}
+      {totalPage && <LoadMoreBtn onClick={hendleLoadMore} />}
+
+      {loading && <Loader />}
     </div>
   );
 }

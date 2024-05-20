@@ -21,6 +21,7 @@
 }
 
 .btn{
+    display: flex;
     border: 1px solid black;
     border-radius: 8px;
     background-color: rgb(78, 78, 78);
@@ -28,4 +29,6 @@
     padding: 10px;
     font-weight: 500;
     font-size: medium;
+  justify-content: center;
+
 }
