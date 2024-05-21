@@ -17,10 +17,9 @@ export default function App() {
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [totalPage, setTotalPage] = useState(false);
-//  const [modalIsOpen, setModalIsOpen] = useState(false);
-//  const [selectedImageUrl, setSelectedImageUrl] = useState("");
-const [isOpen, setIsOpen] = useState(false);
-  const [selectedImages, setSelectedImages] = useState("");
+ const [modalIsOpen, setModalIsOpen] = useState(false);
+ const [selectedImageUrl, setSelectedImageUrl] = useState("");
+
   
   useEffect(() => {
     if (searchQuery.trim() === "") {
@@ -62,22 +61,16 @@ const [isOpen, setIsOpen] = useState(false);
    
   };
 // modal
-    // const openModal = (imageUrl) => {
-    //   setSelectedImageUrl(imageUrl);
-    //   setModalIsOpen(true);
-    // };
+    const openModal = (imageUrl) => {
+      setSelectedImageUrl(imageUrl);
+      setModalIsOpen(true);
+    };
 
-    // const closeModal = () => {
-    //   setModalIsOpen(false);
-  // };
-  const handleOpenModal = (imageUrl) => {
-    setSelectedImages(imageUrl);
-    setIsOpen(true);
+  const closeModal = () => {
+      setSelectedImageUrl("");
+      setModalIsOpen(false);
   };
-  const handleCloseModal = () => {
-    setSelectedImages("");
-    setIsOpen(false);
-  };
+
 
   return (
     <div>
@@ -85,20 +78,18 @@ const [isOpen, setIsOpen] = useState(false);
 
       {error && <ErrorMessage />}
 
-      {images.length > 0 && <ImageGallery items={images} />}
+      {images.length > 0 && (
+        <ImageGallery items={images} onImageClick={openModal} />
+      )}
       {totalPage && <LoadMoreBtn onClick={hendleLoadMore} />}
-      {/* <ImageModal
+
+      {loading && <Loader />}
+
+   
+      <ImageModal
         isOpen={modalIsOpen}
         onClose={closeModal}
         imageUrl={selectedImageUrl}
-      /> */}
-      {loading && <Loader />}
-
-      <ImageModal
-        images={images}
-        isOpen={isOpen}
-        isClose={handleCloseModal}
-        imageUrl={selectedImages}
       />
     </div>
   );
