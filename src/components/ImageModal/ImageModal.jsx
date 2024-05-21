@@ -17,7 +17,7 @@ const customStyles = {
     border: "none",
     background: "none",
     overflow: "visible",
-  height: "400px",
+   height: "500px",
     with:"auto",
   },
 };
@@ -26,7 +26,7 @@ Modal.setAppElement("#root");
 
 export default function ImageModal({ isOpen, onClose, imageUrl }) {
   return (
-    <Modal isOpen={isOpen} onRequestClose={onClose} style={customStyles} height="400px">
+    <Modal isOpen={isOpen} onRequestClose={onClose} style={customStyles} >
       <img src={imageUrl} alt="Large"  />
     </Modal>
   );

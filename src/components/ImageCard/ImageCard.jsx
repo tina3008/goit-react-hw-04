@@ -2,7 +2,7 @@ import css from "./ImageCard.module.css";
 
 export default function ImageCard({ imgLink: { small, regular }, imgSlug, onClick }) {
   const handleClick = () => {
-    onClick(regular);
+    onClick(small);
    
   };
   return (
