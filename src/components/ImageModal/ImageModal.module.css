@@ -1,21 +1,3 @@
-.overlay {
-  background-color: rgba(0, 0, 0, 0.5);
+.modalImg{
+  height: 100px;
 }
-
-.content {
-  left: 50%;
-  right: -50%;
-  transform: translate(-50%, 0);
-
-  max-width: 80%;
-  height: auto;
-  overflow: hidden;
-  border: none;
-}
-.backdrop{
-	position: fixed;
-	top: 0%;
-	left: 0%;
-	height:  100%;
-	width: 100%;
-	background-color: rgba(46, 47, 66, 0.40);
