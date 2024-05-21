@@ -7,7 +7,7 @@ import Loader from "./Loader/Loader";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./ImageModal/ImageModal";
- 
+
 
 
 export default function App() {
@@ -17,10 +17,11 @@ export default function App() {
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [totalPage, setTotalPage] = useState(false);
- const [modalIsOpen, setModalIsOpen] = useState(false);
- const [selectedImageUrl, setSelectedImageUrl] = useState("");
-
-
+//  const [modalIsOpen, setModalIsOpen] = useState(false);
+//  const [selectedImageUrl, setSelectedImageUrl] = useState("");
+const [isOpen, setIsOpen] = useState(false);
+  const [selectedImages, setSelectedImages] = useState("");
+  
   useEffect(() => {
     if (searchQuery.trim() === "") {
       return;
@@ -61,14 +62,23 @@ export default function App() {
    
   };
 // modal
-    const openModal = (imageUrl) => {
-      setSelectedImageUrl(imageUrl);
-      setModalIsOpen(true);
-    };
+    // const openModal = (imageUrl) => {
+    //   setSelectedImageUrl(imageUrl);
+    //   setModalIsOpen(true);
+    // };
 
-    const closeModal = () => {
-      setModalIsOpen(false);
-    };
+    // const closeModal = () => {
+    //   setModalIsOpen(false);
+  // };
+  const handleOpenModal = (imageUrl) => {
+    setSelectedImages(imageUrl);
+    setIsOpen(true);
+  };
+  const handleCloseModal = () => {
+    setSelectedImages("");
+    setIsOpen(false);
+  };
+
   return (
     <div>
       <SearchBar onSearch={handleSearch} />
@@ -77,12 +87,19 @@ export default function App() {
 
       {images.length > 0 && <ImageGallery items={images} />}
       {totalPage && <LoadMoreBtn onClick={hendleLoadMore} />}
-      <ImageModal
+      {/* <ImageModal
         isOpen={modalIsOpen}
         onClose={closeModal}
         imageUrl={selectedImageUrl}
-      />
+      /> */}
       {loading && <Loader />}
+
+      <ImageModal
+        images={images}
+        isOpen={isOpen}
+        isClose={handleCloseModal}
+        imageUrl={selectedImages}
+      />
     </div>
   );
 }
