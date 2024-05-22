@@ -25,21 +25,16 @@ export default function App() {
     if (searchQuery.trim() === "") {
       return;
     }
-      async function getPhoto() {
-        try {
-          setLoading(true);
-          setError(false);
-          const data = await getImages(searchQuery, page);
-          setTotalPage(page < Math.ceil(data.total / 15));
-          setImages(data.results);
-        } catch (error) {
-          setError(true);
-        }
-      }
-    getPhoto();
+  
     async function fetchImages() {
       try {
-        setImages((prevState) => [...prevState, ...images]);
+        setLoading(true);
+        setError(false);
+        const { results, total } = await getImages(searchQuery, page);
+       
+        setImages((prevState) => [...prevState, ...results]);
+         setTotalPage(page < Math.ceil(total / 15));
+        
       } catch (error) {
         setError(true);
       } finally {
@@ -48,7 +43,7 @@ export default function App() {
     }
 
     fetchImages();
-  }, [page, searchQuery]);
+  }, [searchQuery, page]);
 
   const handleSearch = async (searchImg) => {
     setSearchQuery(searchImg);
